@@ -1,12 +1,13 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!, 
   # GET /tasks
   # GET /tasks.json
   def index
     @tasks = Task.all
     @done_tasks = Task.where(is_done: true)
     @undone_tasks = Task.where(is_done: false)
+    @user = current_user
   end
 
   # GET /tasks/1
@@ -27,7 +28,8 @@ class TasksController < ApplicationController
   # POST /tasks.json
   def create
     @task = Task.new(task_params)
-
+    @task.user_id = current_user.id
+    @task.email = current_user.email
     respond_to do |format|
       if @task.save
         format.html { redirect_to @task, notice: 'Task was successfully created.' }
@@ -83,6 +85,9 @@ class TasksController < ApplicationController
     else
       render :index
     end
+  end
+
+  def authentication
   end
 
   private
