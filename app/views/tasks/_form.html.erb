@@ -26,6 +26,16 @@
     <%= form.check_box :is_done %>
   </div>
 
+  <div class="field">
+    <%= form.label :duedate %>
+    <%= form.date_field :duedate %>
+  </div>
+
+  <div class="field">
+    <%= form.label :assignee_id, '担当者' %>
+    <%= form.collection_select(:assignee_id, User.all, :id, :email, { include_blank: true }) %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

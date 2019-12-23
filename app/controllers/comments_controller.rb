@@ -1,11 +1,11 @@
 class CommentsController < ApplicationController
 	def create
-    @comment = Comment.new(comment_params)
+    @comment = @task.comments.new(comment_params)
     @comment.user_id = current_user.id
     if @comment.save
-      redirect_back(fallback_location: root_path)
+      redirect_to @task, notice: 'コメントを追加しました。'
     else
-      redirect_back(fallback_location: root_path)
+      render 'tasks/show'
     end
   end
   private
